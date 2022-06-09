@@ -54,11 +54,12 @@ namespace MovieStore.Movies
             );
         }
 
-        public async Task<PagedResultDto<MovieDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        public async Task<PagedResultDto<MovieDto>> GetListAsync(MovieSearchFilterDto input)
         {
             var queryable = await _movieRepository
  .WithDetailsAsync(x => x.Genre);
-            queryable = queryable
+            queryable = queryable.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Title.ToLower().Contains(input.Filter.ToLower()))
+               // .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Genre.Name.ToLower().Contains(input.Filter.ToLower()))
             .Skip(input.SkipCount)
             .Take(input.MaxResultCount)
             .OrderBy(input.Sorting ?? nameof(Movie.Title));
@@ -76,6 +77,24 @@ namespace MovieStore.Movies
         public async Task DeleteAsync(Guid id)
         {
             await _movieRepository.DeleteAsync(id);
+        }
+
+        
+        public async Task<PagedResultDto<MovieDto>> GetListFiltterAsync(MovieSearchFilterDto input)
+        {
+            var queryable = await _movieRepository.GetQueryableAsync();
+            var query = queryable.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Title.ToLower()
+                .Contains(input.Filter.ToLower()))
+                .OrderBy(input.Sorting ?? nameof(Movie.Title).ToLower())
+                .PageBy(input);
+
+
+            var count = await AsyncExecuter.CountAsync(query);
+            var movies = await AsyncExecuter.ToListAsync(query);
+
+            var result = ObjectMapper.Map<List<Movie>, List<MovieDto>>(movies);
+
+            return new PagedResultDto<MovieDto> { Items = result, TotalCount = count };
         }
     }
 }

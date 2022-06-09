@@ -2,6 +2,16 @@
     var l = abp.localization.getResource('MovieStore');
     var createModal = new abp.ModalManager(abp.appPath + 'Movies/CreateMovieModal');
     var editModal = new abp.ModalManager(abp.appPath + 'Movies/EditMovieModal');
+
+
+    //Search and Fillter
+    //get the value of the search input
+    var getFilter = function () {
+        return {
+            filter: $("input[name='Search'").val()
+        };
+    };
+    // End Search Function
     var dataTable = $('#MoviesTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
@@ -10,7 +20,7 @@
             searching: false,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(
-                movieStore.movies.movie.getList),
+                movieStore.movies.movie.getList, getFilter),//pass the filter to the GetList method
             columnDefs: [
                 {
                     title: l('Actions'),
@@ -68,14 +78,19 @@
         })
     );
 
+    $("input[name='Search'").keyup(function () {
+        dataTable.ajax.reload();
+    });
     createModal.onResult(function () {
         dataTable.ajax.reload();
     });
     editModal.onResult(function () {
         dataTable.ajax.reload();
     });
+   
     $('#NewMovieButton').click(function (e) {
         e.preventDefault();
         createModal.open();
     });
+    
 });

@@ -17,6 +17,7 @@
         <abp-row>
             <abp-column size-md="_6">
                 <abp-card-title>@L["Menu:Movies"]</abp-card-title>
+                
             </abp-column>
             <abp-column size-md="_6" class="text-end">
                 @if (await AuthorizationService.IsGrantedAsync(MovieStorePermissions.Movies.Create))
@@ -31,6 +32,8 @@
         </abp-row>
     </abp-card-header>
     <abp-card-body>
+         Search: 
+                <input name="Search" /> @* add search input *@
         <abp-table id="MoviesTable" striped-rows="true" />
     </abp-card-body>
 </abp-card>
