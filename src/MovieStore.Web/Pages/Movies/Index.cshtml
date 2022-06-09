@@ -1,0 +1,29 @@
+﻿@page
+@model MovieStore.Web.Pages.Movies.IndexModel
+@{
+}
+@using Microsoft.Extensions.Localization
+@using MovieStore.Localization
+@inject IStringLocalizer<MovieStoreResource> L
+@section scripts
+{
+ <abp-script src="/Pages/Movies/Index.js" />
+}
+<abp-card>
+ <abp-card-header>
+ <abp-row>
+ <abp-column size-md="_6">
+ <abp-card-title>@L["Menu:Movies"]</abp-card-title>
+ </abp-column>
+ <abp-column size-md="_6" class="text-end">
+ <abp-button id="NewMovieButton"
+ text="@L["NewMovie"].Value"
+ icon="plus"
+ button-type="Primary"/>
+ </abp-column>
+ </abp-row>
+</abp-card-header>
+ <abp-card-body>
+ <abp-table id="MoviesTable" striped-rows="true" />
+ </abp-card-body>
+</abp-card>
