@@ -14,5 +14,7 @@ public class MovieStoreApplicationAutoMapperProfile : Profile
         CreateMap<Movie, MovieDto>();
         CreateMap<CreateUpdateMovieDto, Movie>();
         CreateMap<Genre, GenreLookupDto>();
+        CreateMap<Genre, GenreDto>();
+        CreateMap<CreateUpdateGenreDto, Genre>();
     }
 }

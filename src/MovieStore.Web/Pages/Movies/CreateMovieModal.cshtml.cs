@@ -5,6 +5,7 @@ using MovieStore.Movies;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
@@ -51,6 +52,7 @@ namespace MovieStore.Web.Pages.Movies
 
             [DataType(DataType.Date)]
             public DateTime ReleaseDate { get; set; }
+            [Column(TypeName = "decimal(18, 2)")]
             public decimal Price { get; set; }
         }
     }

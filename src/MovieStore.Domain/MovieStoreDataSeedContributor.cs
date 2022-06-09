@@ -31,6 +31,8 @@ namespace MovieStore
             }
             var Drama = new Genre { Name = "Drama" };
             var Herror = new Genre { Name = "Herror" };
+            var Western = new Genre { Name = "Western" };
+            var Comedy = new Genre { Name = "Comedy" };
             await _genreRepository
              .InsertManyAsync(new[] { Drama, Herror });
             var mov1 = new Movie
@@ -54,10 +56,39 @@ namespace MovieStore
                 Price = 163,
                 ReleaseDate = new DateTime(2018, 05, 24)
             };
-          
+            var mov4 = new Movie 
+            {
+                Title = "When Harry Met Sally",
+                ReleaseDate = new DateTime(1989,2,12),
+                Genre = Herror,
+                Price = 7.99M
+            };
+            
+            var mov6 = new Movie
+            {
+                Title = "Ghostbusters ",
+                ReleaseDate = DateTime.Parse("1984-3-13"),
+                Genre = Herror,
+                Price = 8.99M
+            };
+            var mov7 = new Movie
+            {
+                Title = "Ghostbusters 2",
+                ReleaseDate = DateTime.Parse("1986-2-23"),
+                Genre = Comedy,
+                Price = 9.99M
+            };
+            var mov8 = new Movie
+            {
+                Title = "Rio Bravo",
+                ReleaseDate = DateTime.Parse("1959-4-15"),
+                Genre = Western,
+                Price = 3.99M
+            };
+
 
             await _movieRepository
- .InsertManyAsync(new[] { mov1, mov2, mov3 });
+ .InsertManyAsync(new[] { mov1, mov2, mov3, mov4, mov6, mov7,mov8 });
            
         }
     }
