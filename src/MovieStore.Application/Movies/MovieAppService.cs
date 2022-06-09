@@ -1,4 +1,6 @@
-﻿using MovieStore.Genres;
+﻿using Microsoft.AspNetCore.Authorization;
+using MovieStore.Genres;
+using MovieStore.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace MovieStore.Movies
 {
+    [Authorize(MovieStorePermissions.Movies.Default)]
     public class MovieAppService : MovieStoreAppService, IMovieAppService
     {
         private readonly IRepository<Movie, Guid> _movieRepository;
@@ -21,6 +24,7 @@ namespace MovieStore.Movies
             _movieRepository = movieRepository;
             _genreRepository = genreRepository;
         }
+        [Authorize(MovieStorePermissions.Movies.Create)]
 
         public async Task CreateAsync(CreateUpdateMovieDto input)
         {
@@ -33,6 +37,7 @@ namespace MovieStore.Movies
  await _movieRepository.GetAsync(id)
  );
         }
+        [Authorize(MovieStorePermissions.Movies.Edit)]
         public async Task UpdateAsync(Guid id, CreateUpdateMovieDto input)
         {
             var movie = await _movieRepository.GetAsync(id);
@@ -67,6 +72,7 @@ namespace MovieStore.Movies
             );
         }
 
+        [Authorize(MovieStorePermissions.Movies.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             await _movieRepository.DeleteAsync(id);

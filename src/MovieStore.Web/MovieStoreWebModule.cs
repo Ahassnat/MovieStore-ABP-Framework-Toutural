@@ -37,6 +37,8 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MovieStore.Permissions;
 
 namespace MovieStore.Web;
 
@@ -85,6 +87,12 @@ public class MovieStoreWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+        Configure<RazorPagesOptions>(options =>
+        {
+            options.Conventions.AuthorizePage("/Movies/Index", MovieStorePermissions.Movies.Default);
+            options.Conventions.AuthorizePage("/Movies/CreateModal", MovieStorePermissions.Movies.Create);
+            options.Conventions.AuthorizePage("/Movies/EditModal", MovieStorePermissions.Movies.Edit);
+        });
     }
 
     private void ConfigureUrls(IConfiguration configuration)

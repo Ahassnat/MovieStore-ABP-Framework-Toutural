@@ -19,12 +19,14 @@
                             [
                                 {
                                     text: l('Edit'),
+                                    visible: abp.auth.isGranted('MovieStore.Movies.Edit'), //CHECK for the PERMISSION
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
+                                    visible: abp.auth.isGranted('MovieStore.Movies.Delete'),
                                     confirmMessage: function (data) {
                                         return l('MovieDeletionConfirmationMessage',
                                             data.record.name);
