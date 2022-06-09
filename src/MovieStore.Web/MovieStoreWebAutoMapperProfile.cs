@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using MovieStore.Genres;
 using MovieStore.Movies;
+using static MovieStore.Web.Pages.Genres.CreateGenreModalModel;
 using static MovieStore.Web.Pages.Movies.CreateMovieModalModel;
 
 namespace MovieStore.Web;
@@ -11,6 +13,9 @@ public class MovieStoreWebAutoMapperProfile : Profile
         //Define your AutoMapper configuration here for the Web project.
         CreateMap<CreateEditMovieViewModel,CreateUpdateMovieDto>();
         CreateMap<MovieDto, CreateEditMovieViewModel>();
+
+        CreateMap<CreateEditGenreViewModel, CreateUpdateGenreDto>();
+        CreateMap<GenreDto, CreateEditGenreViewModel>();
 
     }
 }

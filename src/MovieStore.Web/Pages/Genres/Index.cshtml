@@ -1,0 +1,39 @@
+﻿@page
+@model MovieStore.Web.Pages.Genres.IndexModel
+@{
+}
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using MovieStore.Localization
+@using MovieStore.Permissions
+@inject IStringLocalizer<MovieStoreResource> L
+@inject IAuthorizationService AuthorizationService
+@section scripts
+{
+<abp-script src="/Pages/Genres/Index.js" />
+}
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Menu:Genres"]</abp-card-title>
+                
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(MovieStorePermissions.Genres.Create))
+                {
+                    <abp-button id="NewGenreButton"
+                            text="@L["NewGenre"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+         Search: 
+                <input name="Search" /> @* add search input *@
+        <abp-table id="GenresTable" striped-rows="true" />
+    </abp-card-body>
+</abp-card>

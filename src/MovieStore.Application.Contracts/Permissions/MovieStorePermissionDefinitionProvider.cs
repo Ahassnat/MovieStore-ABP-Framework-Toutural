@@ -16,6 +16,10 @@ public class MovieStorePermissionDefinitionProvider : PermissionDefinitionProvid
         moviesPermission.AddChild(MovieStorePermissions.Movies.Edit, L("Permission:Movies.Edit"));
         moviesPermission.AddChild(MovieStorePermissions.Movies.Delete, L("Permission:Movies.Delete"));
 
+        var genresPermission = movieStoreGroup.AddPermission(MovieStorePermissions.Genres.Default, L("Permission:Genres"));
+        genresPermission.AddChild(MovieStorePermissions.Genres.Create, L("Permission:Genres.Create"));
+        genresPermission.AddChild(MovieStorePermissions.Genres.Edit, L("Permission:Genres.Edit"));
+        genresPermission.AddChild(MovieStorePermissions.Genres.Delete, L("Permission:Genres.Delete"));
         //Define your own permissions here. Example:
         //myGroup.AddPermission(MovieStorePermissions.MyPermission1, L("Permission:MyPermission1"));
     }

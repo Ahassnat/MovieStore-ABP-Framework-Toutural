@@ -69,6 +69,16 @@ public class MovieStoreMenuContributor : IMenuContributor
             ));
         }
 
+        //CHECK the PERMISSION
+        if (await context.IsGrantedAsync(MovieStorePermissions.Genres.Default))
+        {
+            movieStoreMenu.AddItem(new ApplicationMenuItem(
+                "MoviesStore.Genres",
+                l["Menu:Genres"],
+                url: "/Genres"
+            ));
+        }
+
         if (MultiTenancyConsts.IsEnabled)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
