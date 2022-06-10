@@ -17,21 +17,25 @@ namespace MovieStore.Movies
     {
         private readonly IMovieRepository _movieRepository;
         private readonly IRepository<Genre, Guid> _genreRepository;
-        private readonly MovieManager _movieManager;
+       // private readonly MovieManager _movieManager;
 
         public MovieAppService(IMovieRepository movieRepository,
-                               IRepository<Genre,Guid> genreRepository,
-                               MovieManager movieManager)
+                               IRepository<Genre,Guid> genreRepository
+                               /*MovieManager movieManager*/)
         {
             _movieRepository = movieRepository;
             _genreRepository = genreRepository;
-            _movieManager = movieManager;
+            //_movieManager = movieManager;
         }
         [Authorize(MovieStorePermissions.Movies.Create)]
 
         public async Task CreateAsync(CreateUpdateMovieDto input)
         {
-            await _movieManager.CreateAsync(input.Title);
+            var existingMovie = await _movieRepository.FindByTitle(input.Title);
+            if (existingMovie != null)
+            {
+                throw new MovieAlreadyExistsException(input.Title);
+            }
             await _movieRepository.InsertAsync( ObjectMapper.Map<CreateUpdateMovieDto, Movie>(input));
         }
         
@@ -44,14 +48,13 @@ namespace MovieStore.Movies
         [Authorize(MovieStorePermissions.Movies.Edit)]
         public async Task UpdateAsync(Guid id, CreateUpdateMovieDto input)
         {
-            var movieE = await _movieRepository.GetAsync(id);
-
-            if (movieE.Title != input.Title)
+            var existingMovie = await _movieRepository.FindByTitle(input.Title);
+            if (existingMovie != null)
             {
-                await _movieManager.UpdateAsync(movieE, input.Title);
+                throw new MovieAlreadyExistsException(input.Title);
             }
 
-           
+
             var movie = await _movieRepository.GetAsync(id);
             ObjectMapper.Map(input, movie);
         }
