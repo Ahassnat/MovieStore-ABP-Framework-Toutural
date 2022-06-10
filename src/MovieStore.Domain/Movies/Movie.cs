@@ -18,5 +18,8 @@ namespace MovieStore.Movies
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
         public decimal Price { get; set; }
+
+
+
     }
 }

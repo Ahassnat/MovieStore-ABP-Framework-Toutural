@@ -8,6 +8,7 @@
     "Permission:Movies": "Movie Management",
     "Permission:Movies.Create": "Creating new Movies",
     "Permission:Movies.Edit": "Editing the Movies",
-    "Permission:Movies.Delete": "Deleting the Movies"
+    "Permission:Movies.Delete": "Deleting the Movies",
+    "MovieStore:00001": "There is already an movie with the same name: {title}"
   }
 }

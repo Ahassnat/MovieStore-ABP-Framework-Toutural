@@ -15,22 +15,26 @@ namespace MovieStore.Movies
     [Authorize(MovieStorePermissions.Movies.Default)]
     public class MovieAppService : MovieStoreAppService, IMovieAppService
     {
-        private readonly IRepository<Movie, Guid> _movieRepository;
+        private readonly IMovieRepository _movieRepository;
         private readonly IRepository<Genre, Guid> _genreRepository;
+        private readonly MovieManager _movieManager;
 
-        public MovieAppService(IRepository<Movie,Guid> movieRepository,
-                               IRepository<Genre,Guid> genreRepository)
+        public MovieAppService(IMovieRepository movieRepository,
+                               IRepository<Genre,Guid> genreRepository,
+                               MovieManager movieManager)
         {
             _movieRepository = movieRepository;
             _genreRepository = genreRepository;
+            _movieManager = movieManager;
         }
         [Authorize(MovieStorePermissions.Movies.Create)]
 
         public async Task CreateAsync(CreateUpdateMovieDto input)
         {
+            await _movieManager.CreateAsync(input.Title);
             await _movieRepository.InsertAsync( ObjectMapper.Map<CreateUpdateMovieDto, Movie>(input));
         }
-
+        
         public async Task<MovieDto> GetAsync(Guid id)
         {
             return ObjectMapper.Map<Movie, MovieDto>(
@@ -40,6 +44,14 @@ namespace MovieStore.Movies
         [Authorize(MovieStorePermissions.Movies.Edit)]
         public async Task UpdateAsync(Guid id, CreateUpdateMovieDto input)
         {
+            var movieE = await _movieRepository.GetAsync(id);
+
+            if (movieE.Title != input.Title)
+            {
+                await _movieManager.UpdateAsync(movieE, input.Title);
+            }
+
+           
             var movie = await _movieRepository.GetAsync(id);
             ObjectMapper.Map(input, movie);
         }
