@@ -11,6 +11,8 @@ namespace MovieStore.Movies
     {
         public string GenreName { get; set; }
         public Guid GenreId { get; set; }
+        public string ActorName { get; set; }
+        public Guid ActorId { get; set; }
         public string Title { get; set; }
 
         [DataType(DataType.Date)]

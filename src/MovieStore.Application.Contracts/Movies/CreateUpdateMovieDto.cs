@@ -7,7 +7,8 @@ namespace MovieStore.Movies
 {
     public class CreateUpdateMovieDto
     {
-        public Guid GenreId { get; set; }
+        public Guid GenreId { get; set; } 
+        public Guid ActorId { get; set; }
         [Required]
         public string Title { get; set; }
 

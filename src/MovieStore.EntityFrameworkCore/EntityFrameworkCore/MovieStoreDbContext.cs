@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieStore.Actors;
 using MovieStore.Genres;
 using MovieStore.Movies;
+using MovieStore.MoviesActors;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -30,6 +32,8 @@ public class MovieStoreDbContext :
     #region Entities from the modules
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Genre> Genres { get; set; }
+    public DbSet<Actor> Actors { get; set; }
+   
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
      * and replaced them for this DbContext. This allows you to perform JOIN
      * queries for the entities of these modules over the repositories easily. You
@@ -103,5 +107,13 @@ public class MovieStoreDbContext :
             .IsRequired();
             b.HasIndex(x => x.Title).IsUnique();
         });
+        builder.Entity<Actor>(b =>
+        {
+            b.ToTable("Actors");
+            b.Property(x => x.ActorName)
+            .IsRequired();
+            b.HasIndex(x => x.ActorName).IsUnique();
+        });
+       
     }
 }

@@ -1,4 +1,6 @@
-﻿using MovieStore.Genres;
+﻿using MovieStore.Actors;
+using MovieStore.Genres;
+using MovieStore.MoviesActors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,13 +15,14 @@ namespace MovieStore.Movies
     {
         public Genre Genre { get; set; }
         public Guid GenreId { get; set; }
+        //public Actor Actor { get; set; }
+        //public Guid ActorId { get; set; }
         public string Title { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
         public decimal Price { get; set; }
-
-
+        public virtual ICollection<MovieActor> Actors { get; set; }
 
     }
 }

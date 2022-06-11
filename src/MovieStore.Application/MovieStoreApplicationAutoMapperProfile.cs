@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MovieStore.Actors;
 using MovieStore.Genres;
 using MovieStore.Movies;
 
@@ -16,5 +17,9 @@ public class MovieStoreApplicationAutoMapperProfile : Profile
         CreateMap<Genre, GenreLookupDto>();
         CreateMap<Genre, GenreDto>();
         CreateMap<CreateUpdateGenreDto, Genre>();
+
+
+        CreateMap<Actor, ActorLookupDto>();
+       
     }
 }

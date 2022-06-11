@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using MovieStore.Actors;
 using MovieStore.Genres;
 using MovieStore.Permissions;
 using System;
@@ -17,14 +18,18 @@ namespace MovieStore.Movies
     {
         private readonly IMovieRepository _movieRepository;
         private readonly IRepository<Genre, Guid> _genreRepository;
-       // private readonly MovieManager _movieManager;
+        private readonly IRepository<Actor, Guid> _actorRepository;
+
+        // private readonly MovieManager _movieManager;
 
         public MovieAppService(IMovieRepository movieRepository,
-                               IRepository<Genre,Guid> genreRepository
+                               IRepository<Genre,Guid> genreRepository,
+                               IRepository<Actor, Guid> actorRepository
                                /*MovieManager movieManager*/)
         {
             _movieRepository = movieRepository;
             _genreRepository = genreRepository;
+            _actorRepository = actorRepository;
             //_movieManager = movieManager;
         }
         [Authorize(MovieStorePermissions.Movies.Create)]
@@ -73,6 +78,11 @@ namespace MovieStore.Movies
         {
             var queryable = await _movieRepository
  .WithDetailsAsync(x => x.Genre);
+            //TODO Add Actor to query
+            //var queryable = await _movieRepository
+            //.WithDetailsAsync(); // => Mapping to list of genre and actors from DbContext Module
+
+
             queryable = queryable.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Title.ToLower().Contains(input.Filter.ToLower()))
                // .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Genre.Name.ToLower().Contains(input.Filter.ToLower()))
             .Skip(input.SkipCount)
@@ -110,6 +120,17 @@ namespace MovieStore.Movies
             var result = ObjectMapper.Map<List<Movie>, List<MovieDto>>(movies);
 
             return new PagedResultDto<MovieDto> { Items = result, TotalCount = count };
+        }
+
+        //TODO: Get Actors 
+        public async Task<ListResultDto<ActorsLookupDto>> GetActorsAsync()
+        {
+            var actors = await _actorRepository.GetListAsync();
+            return new ListResultDto<ActorsLookupDto>(
+            ObjectMapper
+            .Map<List<Actor>, List<ActorsLookupDto>>
+           (actors)
+            );
         }
     }
 }

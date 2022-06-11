@@ -73,7 +73,21 @@
                     data: "releaseDate",
                     dataFormat: 'date'
 
-                }
+                },
+                /*Add the new actor button*/
+                //{
+                //    targets: 0,
+                //    data: null,
+                //    defaultContent: '<button >New Actor<button/>',
+                //},
+                //{
+                //    targets: 0,
+                //    text: l('Edit'),
+                //    visible: abp.auth.isGranted('MovieStore.Movies.Edit'), //CHECK for the PERMISSION
+                //    action: function (data) {
+                //        editModal.open({ id: data.record.id });
+                //    }
+                //}
             ]
         })
     );

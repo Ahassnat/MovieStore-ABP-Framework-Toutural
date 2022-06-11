@@ -1,8 +1,11 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MovieStore.Movies;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -47,6 +50,15 @@ public class MovieStoreEntityFrameworkCoreModule : AbpModule
                 /* The main point to change your DBMS.
                  * See also MovieStoreMigrationsDbContextFactory for EF Core tooling. */
             options.UseSqlServer();
+
+        });
+        //TODO: Make this Option Out of use
+        Configure<AbpEntityOptions>(options =>
+        {
+            options.Entity<Movie>(orderOptions =>
+            {
+                orderOptions.DefaultWithDetailsFunc = query => query.Include(g => g.Genre).Include(a=>a.Actors);
+            });
         });
     }
 }

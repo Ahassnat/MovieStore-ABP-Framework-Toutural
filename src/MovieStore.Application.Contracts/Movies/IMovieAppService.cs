@@ -13,6 +13,7 @@ namespace MovieStore.Movies
         Task<PagedResultDto<MovieDto>> GetListFiltterAsync(MovieSearchFilterDto input);
         Task CreateAsync(CreateUpdateMovieDto input);
         Task<ListResultDto<GenreLookupDto>> GetGenrsAsync();
+        Task<ListResultDto<ActorsLookupDto>> GetActorsAsync();  // to bring actor with Movie 
         Task<MovieDto> GetAsync(Guid id);
         Task UpdateAsync(Guid id, CreateUpdateMovieDto input);
         Task DeleteAsync(Guid id);
