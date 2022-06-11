@@ -9,6 +9,7 @@
     "Permission:Movies.Create": "Creating new Movies",
     "Permission:Movies.Edit": "Editing the Movies",
     "Permission:Movies.Delete": "Deleting the Movies",
-    "MovieStore:00001": "There is already an movie with the same name: {title}"
+    "MovieStore:00001": "There is already an movie with the same name: {title}",
+    "MovieStore:00002": "There is already an Actor with the same name: {actorName}"
   }
 }

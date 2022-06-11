@@ -35,6 +35,8 @@ namespace MovieStore.Web.Pages.Movies
             .Select(x => new SelectListItem(x.Name,
            x.Id.ToString()))
             .ToArray();
+
+            //TODO: SelectMany LINQ statment to select many of actors 
             var actorLookup = await _movieAppService.GetActorsAsync();
             Actors = actorLookup.Items
             .Select(x => new SelectListItem(x.Name,

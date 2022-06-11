@@ -12,14 +12,20 @@ public class MovieStoreApplicationAutoMapperProfile : Profile
         /* You can configure your AutoMapper mapping configuration here.
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
+       //Movies
         CreateMap<Movie, MovieDto>();
         CreateMap<CreateUpdateMovieDto, Movie>();
+        CreateMap<Actor, ActorsLookupDto>();
         CreateMap<Genre, GenreLookupDto>();
+
+        //Genre
         CreateMap<Genre, GenreDto>();
         CreateMap<CreateUpdateGenreDto, Genre>();
 
 
-        CreateMap<Actor, ActorLookupDto>();
-       
+        //Actors
+        CreateMap<CreateUpdateActorDto, Actor>();
+        CreateMap<Actor, ActorDto>();
+        CreateMap<Movie, MoviesLookupDto>();
     }
 }

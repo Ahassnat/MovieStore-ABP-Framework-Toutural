@@ -18,6 +18,7 @@ namespace MovieStore.Web.Pages.Movies
         [BindProperty]
         public CreateEditMovieViewModel Movie { get; set; }
         public SelectListItem[] Genres { get; set; }
+        public SelectListItem[] Actors { get; set; }
         public EditMovieModalModel(IMovieAppService movieAppService)
         {
             _movieAppService = movieAppService;
@@ -30,6 +31,13 @@ namespace MovieStore.Web.Pages.Movies
           
             var genreLookup = await _movieAppService.GetGenrsAsync();
             Genres = genreLookup.Items
+            .Select(x => new SelectListItem(x.Name,
+           x.Id.ToString()))
+            .ToArray();
+
+            //TODO: SelectMany LINQ statment to select many of actors 
+            var actorLookup = await _movieAppService.GetActorsAsync();
+            Actors = actorLookup.Items
             .Select(x => new SelectListItem(x.Name,
            x.Id.ToString()))
             .ToArray();
