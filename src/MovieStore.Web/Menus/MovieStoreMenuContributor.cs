@@ -79,6 +79,16 @@ public class MovieStoreMenuContributor : IMenuContributor
             ));
         }
 
+        //CHECK the PERMISSION
+        if (await context.IsGrantedAsync(MovieStorePermissions.Actors.Default))
+        {
+            movieStoreMenu.AddItem(new ApplicationMenuItem(
+                "MoviesStore.Actors",
+                l["Menu:Actors"],
+                url: "/Actors"
+            ));
+        }
+
         if (MultiTenancyConsts.IsEnabled)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);

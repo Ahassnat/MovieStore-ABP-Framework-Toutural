@@ -27,7 +27,6 @@ namespace MovieStore.Web.Pages.Movies
         {
             var movieDto = await _movieAppService.GetAsync(Id);
             Movie = ObjectMapper.Map<MovieDto, CreateEditMovieViewModel>(movieDto);
-
           
             var genreLookup = await _movieAppService.GetGenrsAsync();
             Genres = genreLookup.Items

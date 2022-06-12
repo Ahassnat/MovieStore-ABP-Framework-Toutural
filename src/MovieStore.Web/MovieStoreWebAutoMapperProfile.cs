@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using MovieStore.Actors;
 using MovieStore.Genres;
 using MovieStore.Movies;
+using static MovieStore.Web.Pages.Actors.CreateActorModalModel;
 using static MovieStore.Web.Pages.Genres.CreateGenreModalModel;
 using static MovieStore.Web.Pages.Movies.CreateMovieModalModel;
 
@@ -16,6 +18,9 @@ public class MovieStoreWebAutoMapperProfile : Profile
 
         CreateMap<CreateEditGenreViewModel, CreateUpdateGenreDto>();
         CreateMap<GenreDto, CreateEditGenreViewModel>();
+
+        CreateMap<CreateEditActorViewModel, CreateUpdateActorDto>();
+        CreateMap<ActorDto, CreateEditActorViewModel>();
 
     }
 }
