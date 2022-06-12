@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,7 +20,7 @@ namespace MovieStore.Web.Pages.Movies
 
         [BindProperty]
         public CreateEditMovieViewModel Movie { get; set; }
-        
+
         public SelectListItem[] Genres { get; set; }
         public SelectListItem[] Actors { get; set; }
         public CreateMovieModalModel(IMovieAppService movieAppService)
@@ -30,7 +31,7 @@ namespace MovieStore.Web.Pages.Movies
         {
             Movie = new CreateEditMovieViewModel();
 
-            var genreLookup =await _movieAppService.GetGenrsAsync();
+            var genreLookup = await _movieAppService.GetGenrsAsync();
             Genres = genreLookup.Items
             .Select(x => new SelectListItem(x.Name,
            x.Id.ToString()))
@@ -49,22 +50,37 @@ namespace MovieStore.Web.Pages.Movies
             return NoContent();
         }
 
-        public class CreateEditMovieViewModel
+        public class CreateEditMovieViewModel 
         {
+           
             [SelectItems("Genres")]
             [DisplayName("Genre")]
             public Guid GenreId { get; set; }
             [SelectItems("Actors")]
             [DisplayName("Actor")]
             public Guid ActorId { get; set; }
-            [Required]
+            //  [Required]
 
             public string Title { get; set; }
 
             [DataType(DataType.Date)]
             public DateTime ReleaseDate { get; set; }
             [Column(TypeName = "decimal(18, 2)")]
+
             public decimal Price { get; set; }
         }
+
+
+        public class CreateEditMovieViewModelValidator : AbstractValidator<CreateUpdateMovieDto>
+        {
+            public CreateEditMovieViewModelValidator()
+            {
+                RuleFor(x => x.Title).NotEmpty();
+                //.WithMessage("The Title of Movie is required");
+                // RuleFor(x=>x.ReleaseDate)
+                RuleFor(x => x.Price).NotEqual(0).WithMessage("THe Price must have value");
+            }
+        }
+
     }
 }

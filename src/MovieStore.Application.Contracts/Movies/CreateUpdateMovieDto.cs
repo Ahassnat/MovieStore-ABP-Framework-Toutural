@@ -9,11 +9,14 @@ namespace MovieStore.Movies
     {
         public Guid GenreId { get; set; } 
         public Guid ActorId { get; set; }
-        [Required]
+        //[Required]
         public string Title { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
         public decimal Price { get; set; }
     }
+
+
+
 }

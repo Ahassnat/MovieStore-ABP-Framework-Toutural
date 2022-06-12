@@ -39,6 +39,7 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MovieStore.Permissions;
+using Volo.Abp.FluentValidation;
 
 namespace MovieStore.Web;
 
@@ -56,7 +57,8 @@ namespace MovieStore.Web;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
     )]
-public class MovieStoreWebModule : AbpModule
+[DependsOn(typeof(AbpFluentValidationModule))]
+    public class MovieStoreWebModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
