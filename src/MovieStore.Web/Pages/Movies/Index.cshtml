@@ -12,6 +12,12 @@
 {
 <abp-script src="/Pages/Movies/Index.js" />
 }
+<form id="form-search">
+    <p>
+        Title: <input type="text" name="Filter" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
 <abp-card>
     <abp-card-header>
         <abp-row>
@@ -32,7 +38,7 @@
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-         Search: 
+        @* Search: 
                 <input name="Search" /> @* add search input *@
         <abp-table id="MoviesTable" striped-rows="true" />
     </abp-card-body>

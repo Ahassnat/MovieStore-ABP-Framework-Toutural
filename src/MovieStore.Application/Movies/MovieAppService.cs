@@ -87,7 +87,11 @@ namespace MovieStore.Movies
                // .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Genre.Name.ToLower().Contains(input.Filter.ToLower()))
             .Skip(input.SkipCount)
             .Take(input.MaxResultCount)
-            .OrderBy(input.Sorting ?? nameof(Movie.Title));
+            .OrderBy(input.Sorting.IsNullOrEmpty() ? "id" : input.Sorting);
+
+         
+            
+
             var movies = await
            AsyncExecuter.ToListAsync(queryable);
             var count = await _movieRepository.GetCountAsync();

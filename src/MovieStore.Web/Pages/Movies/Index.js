@@ -6,10 +6,20 @@
 
     //Search and Fillter
     //get the value of the search input
-    var getFilter = function () {
-        return {
-            filter: $("input[name='Search'").val()
-        };
+    //var getFilter = function () {
+    //    return {
+    //        filter: $("input[name='Search'").val()
+    //    };
+    //};
+
+    var inputAction = function (requestData, dataTableSettings) {
+        console.log(requestData);
+        //return requestData;
+
+
+        //console.log(dataTableSettings);
+        // Serialize from data to json object
+        return $("#form-search").serializeFormToObject();
     };
     // End Search Function
     var dataTable = $('#MoviesTable').DataTable(
@@ -20,7 +30,7 @@
             searching: false,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(
-                movieStore.movies.movie.getList, getFilter),//pass the filter to the GetList method
+                movieStore.movies.movie.getList, /*getFilter,*/ inputAction),//pass the filter to the GetList method
             columnDefs: [
                 {
                     title: l('Actions'),
@@ -92,7 +102,11 @@
         })
     );
 
-    $("input[name='Search'").keyup(function () {
+    //$("input[name='Search'").keyup(function () {
+    //    dataTable.ajax.reload();
+    //});
+    $("#form-search").submit(function (e) {
+        e.preventDefault();
         dataTable.ajax.reload();
     });
     createModal.onResult(function () {
