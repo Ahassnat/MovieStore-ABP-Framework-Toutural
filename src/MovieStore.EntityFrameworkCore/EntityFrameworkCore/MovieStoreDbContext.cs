@@ -114,6 +114,11 @@ public class MovieStoreDbContext :
             .IsRequired();
             b.HasIndex(x => x.ActorName).IsUnique();
         });
-       
+
+
+
+        builder.Entity<MovieActor>()
+       .HasKey(bc => new { bc.MovieId, bc.ActorId });
+
     }
 }
