@@ -3,6 +3,7 @@ using MovieStore.Actors;
 using MovieStore.Genres;
 using MovieStore.Movies;
 using MovieStore.MoviesActors;
+using System.Reflection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -88,6 +89,9 @@ public class MovieStoreDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        // Read More About it 
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         builder.Entity<Genre>(b =>
         {
             b.ToTable("Genres");
@@ -106,6 +110,7 @@ public class MovieStoreDbContext :
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
             b.HasIndex(x => x.Title).IsUnique();
+            b.Property(x => x.Price).HasPrecision(18, 2);
         });
         builder.Entity<Actor>(b =>
         {
@@ -116,7 +121,7 @@ public class MovieStoreDbContext :
         });
 
 
-
+        //Transfare the configuration to another class named : MovieActorConfig
         builder.Entity<MovieActor>()
        .HasKey(bc => new { bc.MovieId, bc.ActorId });
 
